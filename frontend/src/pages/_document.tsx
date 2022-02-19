@@ -11,7 +11,7 @@ export default class Document extends NextDocument {
           <meta name="author" content="Albert Tian" />
           <meta
             name="description"
-            content="a web3 playground for my personal projects from buildspace."
+            content="Treehacks 2022 - SaveAs project"
           />
           <link rel="shortcut icon" href="/static/meta/favicon.png" />
 
@@ -21,7 +21,7 @@ export default class Document extends NextDocument {
           <meta property="og:title" content="web3 playground" />
           <meta
             property="og:description"
-            content="a web3 playground for my personal projects from buildspace."
+            content="Treehacks 2022 - SaveAs project"
           />
           <meta
             property="og:image"
@@ -38,7 +38,7 @@ export default class Document extends NextDocument {
           <meta name="twitter:title" content="web3 playground" />
           <meta
             name="twitter:description"
-            content="a web3 playground for my personal projects from buildspace."
+            content="Treehacks 2022 - SaveAs project"
           />
           <meta
             name="twitter:image"
