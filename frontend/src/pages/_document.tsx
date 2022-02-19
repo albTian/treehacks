@@ -16,7 +16,7 @@ export default class Document extends NextDocument {
           <link rel="shortcut icon" href="/static/meta/favicon.png" />
 
           {/* <!-- Facebook Meta Tags --/> */}
-          <meta property="og:url" content="https://web3-albtian.vercel.app/" />
+          <meta property="og:url" content="https://treehacks.vercel.app/" />
           <meta property="og:type" content="website" />
           <meta property="og:title" content="Treehacks 2022 - SaveAs project" />
           <meta
@@ -25,15 +25,15 @@ export default class Document extends NextDocument {
           />
           <meta
             property="og:image"
-            content="https://web3-albtian.vercel.app/static/meta/ogImage.png"
+            content="https://treehacks.vercel.app/static/meta/ogImage.png"
           />
 
           {/* <!-- Twitter Meta Tags --/> */}
           <meta name="twitter:card" content="summary_large_image" />
-          <meta property="twitter:domain" content="web3-albtian.vercel.app" />
+          <meta property="twitter:domain" content="treehacks.vercel.app" />
           <meta
             property="twitter:url"
-            content="https://web3-albtian.vercel.app/"
+            content="https://treehacks.vercel.app/"
           />
           <meta name="twitter:title" content="Treehacks 2022 - SaveAs project" />
           <meta
@@ -42,7 +42,7 @@ export default class Document extends NextDocument {
           />
           <meta
             name="twitter:image"
-            content="https://web3-albtian.vercel.app/static/meta/ogImage.png"
+            content="https://treehacks.vercel.app/static/meta/ogImage.png"
           />
         </Head>
         <body>

@@ -2,7 +2,7 @@
 // import Head from "next/head";
 // import React, { useEffect, useState } from "react";
 // import CandyMachine from "../components/CandyMachine";
-import { Container } from "../components/Container";
+import { Container } from "../src/components/Container";
 // import NextLink from "next/link";
 // import theme from "../theme";
 // import { checkMetaConnection, connectMeta } from "../api/walletAPI";
