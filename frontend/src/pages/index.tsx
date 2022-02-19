@@ -4,8 +4,6 @@ import React, { BaseSyntheticEvent, useEffect, useState } from "react";
 import { checkMetaConnection, connectMeta } from "../api/walletAPI";
 import { getAllWaves, getWaveContract, wave } from "../api/wavePortalAPI";
 import { Container } from "../components/Container";
-import Hero from "../components/Hero";
-import Waves from "../components/Waves";
 
 const Index = () => {
 
@@ -26,7 +24,7 @@ const Index = () => {
           <Input
             value={inputMessage}
             onChange={handleChange}
-            placeholder={"Send me a message to show it below"}
+            placeholder={"link here"}
           />
           <Button
             width={"100%"}
@@ -35,7 +33,7 @@ const Index = () => {
             loadingText={"mining ..."}
             // onClick={() => onWave(inputMessage)}
           >
-            👋 gimme an opensea link
+            👋 gimme an opensea link to monke
           </Button>
         </>
     </Container>

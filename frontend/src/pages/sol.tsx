@@ -9,44 +9,44 @@ import { Container } from "../components/Container";
 import theme from "../theme";
 
 const Sol = () => {
-  // API specific
-  const [walletAddress, setWalletAddress] = useState<Keypair>();
+  // // API specific
+  // const [walletAddress, setWalletAddress] = useState<Keypair>();
 
-  // Frontend specific
-  const toast = useToast();
+  // // Frontend specific
+  // const toast = useToast();
 
-  const onConnectWallet = async () => {
-    const address = await connectSolana();
-    if (address) {
-      setWalletAddress(address);
-      // updateAllWaves();
-    } else {
-      toast({
-        title: "Make sure you have phantom wallet!",
-        description: "Get the chrome extension to connect your wallet",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-    }
-  };
+  // const onConnectWallet = async () => {
+  //   const address = await connectSolana();
+  //   if (address) {
+  //     setWalletAddress(address);
+  //     // updateAllWaves();
+  //   } else {
+  //     toast({
+  //       title: "Make sure you have phantom wallet!",
+  //       description: "Get the chrome extension to connect your wallet",
+  //       status: "error",
+  //       duration: 3000,
+  //       isClosable: true,
+  //     });
+  //   }
+  // };
 
-  useEffect(() => {
-    const onLoad = async () => {
-      const address = await checkSolanaConnection();
-      if (address) {
-        setWalletAddress(address);
-      }
-    };
-    onLoad()
+  // useEffect(() => {
+  //   const onLoad = async () => {
+  //     const address = await checkSolanaConnection();
+  //     if (address) {
+  //       setWalletAddress(address);
+  //     }
+  //   };
+  //   onLoad()
 
-    window.addEventListener("load", onLoad);
-    return () => window.removeEventListener("load", onLoad);
-  }, []);
+  //   window.addEventListener("load", onLoad);
+  //   return () => window.removeEventListener("load", onLoad);
+  // }, []);
 
   return (
     <Container>
-      <Head>
+      {/* <Head>
         <title>solana experiment</title>
       </Head>
       <Box bgGradient={theme.colors.gradient} bgClip="text">
@@ -63,7 +63,8 @@ const Sol = () => {
         <CandyMachine walletAddress={walletAddress} />
       ) : (
         <Button onClick={onConnectWallet}>👻 Connect Phantom wallet</Button>
-      )}
+      )} */}
+      sol
     </Container>
   );
 };

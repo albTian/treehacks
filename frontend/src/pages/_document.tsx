@@ -18,7 +18,7 @@ export default class Document extends NextDocument {
           {/* <!-- Facebook Meta Tags --/> */}
           <meta property="og:url" content="https://web3-albtian.vercel.app/" />
           <meta property="og:type" content="website" />
-          <meta property="og:title" content="web3 playground" />
+          <meta property="og:title" content="Treehacks 2022 - SaveAs project" />
           <meta
             property="og:description"
             content="Treehacks 2022 - SaveAs project"
@@ -35,7 +35,7 @@ export default class Document extends NextDocument {
             property="twitter:url"
             content="https://web3-albtian.vercel.app/"
           />
-          <meta name="twitter:title" content="web3 playground" />
+          <meta name="twitter:title" content="Treehacks 2022 - SaveAs project" />
           <meta
             name="twitter:description"
             content="Treehacks 2022 - SaveAs project"
