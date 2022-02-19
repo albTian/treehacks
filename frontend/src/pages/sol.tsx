@@ -1,12 +1,12 @@
-import { Box, Button, Heading, Text, useToast } from "@chakra-ui/react";
-import { Keypair } from "@solana/web3.js";
-import Head from "next/head";
-import NextLink from "next/link";
-import React, { useEffect, useState } from "react";
-import { checkSolanaConnection, connectSolana } from "../api/walletAPI";
-import CandyMachine from "../components/CandyMachine";
+// import { Box, Button, Heading, Text, useToast } from "@chakra-ui/react";
+// import { Keypair } from "@solana/web3.js";
+// import Head from "next/head";
+// import NextLink from "next/link";
+// import React, { useEffect, useState } from "react";
+// import { checkSolanaConnection, connectSolana } from "../api/walletAPI";
+// import CandyMachine from "../components/CandyMachine";
 import { Container } from "../components/Container";
-import theme from "../theme";
+// import theme from "../theme";
 
 const Sol = () => {
   // // API specific

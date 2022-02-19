@@ -1,12 +1,12 @@
-import { Box, Heading, Button, Text, useToast } from "@chakra-ui/react";
-import Head from "next/head";
-import React, { useEffect, useState } from "react";
-import CandyMachine from "../components/CandyMachine";
+// import { Box, Heading, Button, Text, useToast } from "@chakra-ui/react";
+// import Head from "next/head";
+// import React, { useEffect, useState } from "react";
+// import CandyMachine from "../components/CandyMachine";
 import { Container } from "../components/Container";
-import NextLink from "next/link";
-import theme from "../theme";
-import { checkMetaConnection, connectMeta } from "../api/walletAPI";
-import { mintNFT } from "../api/mintAPI";
+// import NextLink from "next/link";
+// import theme from "../theme";
+// import { checkMetaConnection, connectMeta } from "../api/walletAPI";
+// import { mintNFT } from "../api/mintAPI";
 
 const Mint = () => {
   // // API specific
