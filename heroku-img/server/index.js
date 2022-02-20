@@ -22,13 +22,15 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.get('/', function (req, res, next) {
-    // Handle the get for this route
-    res.send("fuck you.")
-});
+// ------------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------------------
 
-app.post('/', function (req, res, next) {
-    // Handle the post for this route
+
+app.get('/', (req, res) => {
+    res.send("fuck you")
+})
+
+app.post('/', (req, res) => {
     const body = req.body
     const imgurl = body.imgurl
     const imgname = body.imgname
@@ -49,57 +51,7 @@ app.post('/', function (req, res, next) {
         console.log('result: ', result.toString());
         res.send(result.toString())
     });
-});
-
-
-// ------------------------------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------------------------------------
-
-
-// app.get('/', (req, res) => {
-//     const imgurl = "https://static.wikia.nocookie.net/vsbattles/images/7/78/Joseph_goldberg.png/"
-//     const imgname = 'goejoldberg69'
-
-//     let options = {
-//         mode: 'text',
-//         pythonOptions: ['-u'], // get print results in real-time
-//         scriptPath: 'python/', //If you are having python_test.py script in same folder, then it's optional.
-//         args: [imgurl, imgname] //An argument which can be accessed in the script using sys.argv[1]
-//     };
-
-//     PythonShell.run('saveas.py', options, function (err, result) {
-//         if (err) throw err;
-//         // result is an array consisting of messages collected
-//         //during execution of script.
-
-//         // Will simply be url for us
-//         console.log('result: ', result.toString());
-//         res.send(result.toString())
-//     });
-// })
-
-// app.post('/', (req, res) => {
-//     const body = req.body
-//     const imgurl = body.imgurl
-//     const imgname = body.imgname
-
-//     let options = {
-//         mode: 'text',
-//         pythonOptions: ['-u'], // get print results in real-time
-//         scriptPath: 'python/', //If you are having python_test.py script in same folder, then it's optional.
-//         args: [imgurl, imgname] //An argument which can be accessed in the script using sys.argv[1]
-//     };
-
-//     PythonShell.run('saveas.py', options, function (err, result) {
-//         if (err) throw err;
-//         // result is an array consisting of messages collected
-//         //during execution of script.
-
-//         // Will simply be url for us
-//         console.log('result: ', result.toString());
-//         res.send(result.toString())
-//     });
-// })
+})
 
 
 
