@@ -1,21 +1,22 @@
-import { Button, Image, Input, Text, useToast } from "@chakra-ui/react";
+import { Button, Image, Input, Text, useToast, Link } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { checkMetaConnection, connectMeta } from "../api/walletAPI";
 import { Container } from "../components/Container";
 import { getAsset } from "../api/helpers";
+import { getTokenID, safeMint } from "../api/mintAPI";
 
 const Index = () => {
   // API
   const [currentAccount, setCurrentAccount] = useState("");
   const [asset, setAsset] = useState<any>();
+  const [returnLink, setReturnLink] = useState("");
 
   // Frontend
   const [inputAddr, setInputAddr] = useState("");
   const [inputID, setInputID] = useState(1);
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
-
 
   const handleAddrChange = (event: any) => setInputAddr(event.target.value);
   const handleIDChange = (event: any) => {
@@ -28,16 +29,25 @@ const Index = () => {
   };
 
   const handleSubmit = async () => {
-    setIsLoading(true)
-    const asset = await getAsset(inputAddr, inputID)
-    if (asset) {
+    setIsLoading(true);
+    const newAsset = await getAsset(inputAddr, inputID);
+    if (newAsset && currentAccount) {
       // MONKE TIME IN HERE
-      setAsset(asset)
+      const response = await safeMint(
+        currentAccount,
+        `fuck u ${newAsset.name}`,
+        `'${newAsset.description}' - some idiot`,
+        newAsset.image_original_url
+      );
+      if (response) {
+        setAsset(newAsset);
+        setReturnLink(response);
+      }
     }
-    console.log('RETURNED ASSET')
-    console.log(asset)
-    setIsLoading(false)
-  }
+    console.log("RETURNED ASSET");
+    console.log(newAsset);
+    setIsLoading(false);
+  };
 
   const onConnectWallet = async () => {
     const account = await connectMeta();
@@ -90,18 +100,17 @@ const Index = () => {
           />
           <Button
             width={"100%"}
-            // type="submit"
+            type="submit"
             isLoading={isLoading}
             loadingText={"loading ..."}
             onClick={() => handleSubmit()}
           >
             🦧 monke time
           </Button>
-          {asset && (
-            <>
-              heres da pic
-              <Image src={asset.image_original_url} />
-            </>
+          {returnLink && (
+            <Link href={returnLink} isExternal>
+              click here for ur new nft
+            </Link>
           )}
         </>
       ) : (

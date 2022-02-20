@@ -14,12 +14,10 @@ const getAsset = async (addr: string, ID: number): Promise<any> => {
     .get(link)
     .then(function (response) {
       // handle success
-      console.log(response);
       returnValue = response.data;
     })
     .catch(function (error) {
       // handle error
-      console.log(error);
       returnValue = null;
     })
     .then(function () {
