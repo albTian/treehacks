@@ -9,15 +9,13 @@ s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 
 const { PythonShell } = require('python-shell');
 
-// I HAVE DEFATED CORS
-app.use(function (req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", "https://treehacks.vercel.app"); // update to match the domain you will make the request from
-    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
-app.use(express.json());
-
-// const players = require('../data.json')
+// cors is aids.
+// app.use(function (req, res, next) {
+//     res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     res.setHeader("Access-Control-Allow-Origin", "https://treehacks.vercel.app"); // update to match the domain you will make the request from
+//     next();
+// });
+// app.use(express.json());
 
 
 // ------------------------------------------------------------------------------------------------------------------------------------
@@ -66,24 +64,6 @@ app.post('/', (req, res) => {
         // Will simply be url for us
         console.log('result: ', result.toString());
         res.send(result.toString())
-    });
-})
-
-app.get('/python', (req, res) => {
-})
-
-app.get('/aws', (req, res) => {
-    // Call S3 to list the buckets
-    s3.listBuckets(function (err, data) {
-        if (err) {
-            console.log("Error", err);
-            res.send(err)
-        } else {
-            console.log("Success", data.Buckets);
-            console.log(`First bucket: ${data.Buckets[1].Name} created at: ${data.Buckets[1].CreationDate}`);
-            bucketName = data.Buckets[1].Name
-            res.send(`First bucket: ${bucketName}`)
-        }
     });
 })
 
