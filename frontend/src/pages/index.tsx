@@ -34,15 +34,16 @@ const Index = () => {
     const newAsset = await getAsset(inputAddr, inputID);
     if (newAsset && currentAccount) {
       // MONKE TIME IN HERE
-      const response = await safeMint(
+      const overlayLink = await getOverlay(newAsset.image_original_url, newAsset.name)
+      const responseLink = await safeMint(
         currentAccount,
         `fuck u ${newAsset.name}`,
         `'${newAsset.description}' - some idiot`,
-        newAsset.image_original_url
+        overlayLink
       );
-      if (response) {
+      if (responseLink) {
         setAsset(newAsset);
-        setReturnLink(response);
+        setReturnLink(responseLink);
       }
     }
     console.log("RETURNED ASSET");
@@ -108,12 +109,12 @@ const Index = () => {
           >
             🦧 monke time 🦧
           </Button>
-          <Button
+          {/* <Button
             width={"100%"}
             onClick={() => getOverlay("https://treehacks.s3.us-west-1.amazonaws.com/goejoldberg69", "recursion")}
           >
             🦧 monke test 🦧
-          </Button>
+          </Button> */}
           {returnLink && (
             <Link
               href={returnLink}
