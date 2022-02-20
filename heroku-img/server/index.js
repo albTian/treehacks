@@ -39,27 +39,26 @@ app.post('/', (req, res) => {
     const body = req.body
     console.log("body:");
     console.log(body);
-    res.send(body)
-    // const imgurl = body.imgurl
-    // const imgname = body.imgname
+    const imgurl = body.imgurl
+    const imgname = body.imgname
     // // redeploy
 
-    // let options = {
-    //     mode: 'text',
-    //     pythonOptions: ['-u'], // get print results in real-time
-    //     scriptPath: 'python/', //If you are having python_test.py script in same folder, then it's optional.
-    //     args: [imgurl, imgname] //An argument which can be accessed in the script using sys.argv[1]
-    // };
+    let options = {
+        mode: 'text',
+        pythonOptions: ['-u'], // get print results in real-time
+        scriptPath: 'python/', //If you are having python_test.py script in same folder, then it's optional.
+        args: [imgurl, imgname] //An argument which can be accessed in the script using sys.argv[1]
+    };
 
-    // PythonShell.run('saveas.py', options, function (err, result) {
-    //     if (err) throw err;
-    //     // result is an array consisting of messages collected
-    //     //during execution of script.
+    PythonShell.run('saveas.py', options, function (err, result) {
+        if (err) throw err;
+        // result is an array consisting of messages collected
+        //during execution of script.
 
-    //     // Will simply be url for us
-    //     console.log('result: ', result.toString());
-    //     res.send(result.toString())
-    // });
+        // Will simply be url for us
+        console.log('result: ', result.toString());
+        res.send(result.toString())
+    });
 })
 
 
