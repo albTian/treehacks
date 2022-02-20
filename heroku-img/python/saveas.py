@@ -77,5 +77,3 @@ def overlay(base_src, bucket, s3_file):
     # base_img.show()
 
     upload_to_aws(base_img, bucket, s3_file)
-
-    

@@ -1,0 +1,7 @@
+/node_modules
+npm-debug.log
+.DS_Store
+/*.env
+package-lock.json
+yarn.lock
+python/__pycache__
