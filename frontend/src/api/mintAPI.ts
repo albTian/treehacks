@@ -67,17 +67,17 @@ const safeMint = async (
 
     // Params: addr, name, desc, img
     let nftTxn = await saveAsContract.safeMint(addr, name, desc, img);
-    console.log(`nftTxn:`);
-    console.log(nftTxn);
+    // console.log(`nftTxn:`);
+    // console.log(nftTxn);
 
-    console.log("Mining...please wait.");
+    // console.log("Mining...please wait.");
     const dog = await nftTxn.wait();
-    console.log(`dog:`);
-    console.log(dog);
+    // console.log(`dog:`);
+    // console.log(dog);
 
-    console.log(
-      `Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`
-    );
+    // console.log(
+    //   `Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`
+    // );
     const id = await getTokenID(nftTxn.hash)
     response = `${returnLink}/${id}`;
     console.log(response);

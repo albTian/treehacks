@@ -7,6 +7,8 @@ import { getAsset, getOverlay } from "../api/helpers";
 import { safeMint } from "../api/mintAPI";
 import Hero from "../components/Hero";
 
+const HTTP = "https://"
+
 const Index = () => {
   // API
   const [currentAccount, setCurrentAccount] = useState("");
@@ -35,11 +37,20 @@ const Index = () => {
     if (newAsset && currentAccount) {
       // MONKE TIME IN HERE
       const overlayLink = await getOverlay(newAsset.image_original_url, newAsset.name)
+      console.log("overlayLink");
+      console.log(overlayLink);
+      console.log("newAsset");
+      console.log(newAsset);
+      
+      const fullOverlayLink = `${HTTP}${overlayLink}`
+      console.log("fullOverlayLink");
+      console.log(fullOverlayLink);
+      
       const responseLink = await safeMint(
         currentAccount,
         `fuck u ${newAsset.name}`,
         `'${newAsset.description}' - some idiot`,
-        overlayLink
+        fullOverlayLink
       );
       if (responseLink) {
         setAsset(newAsset);
