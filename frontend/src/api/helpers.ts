@@ -39,6 +39,15 @@ function isValidHttpUrl(input: string) {
   return url.protocol === "http:" || url.protocol === "https:";
 }
 
+const isValidOpensea = (input: string) => {
+  if (!isValidHttpUrl) {
+    return false;
+  }
+  const url = new URL(input);
+  return url.host == 'opensea.io'
+
+}
+
 function makeid(length: number) {
   var result = "";
   var characters =
@@ -82,4 +91,4 @@ const getOverlay = async (imgurl: string) => {
   return returnValue;
 };
 
-export { getAsset, getOverlay };
+export { getAsset, getOverlay, isValidOpensea };
