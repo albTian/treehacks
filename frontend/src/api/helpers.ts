@@ -31,28 +31,22 @@ const getOverlay = async (imgurl: string, imgname: string) => {
   let returnValue: any;
   const data = {
     imgurl: imgurl,
-    imgname: imgname
-  }
-  // await axios
-  //   .post(HEROKU, data)
-  //   .then((response) => {
-  //     returnValue = response.data;
-  //   })
-  //   .catch((error) => {
-  //     returnValue = null;
-  //   })
-  //   .then(() => {});
+    imgname: imgname,
+  };
   await axios
-    .get(HEROKU)
+    .post(HEROKU, data)
     .then((response) => {
-      returnValue = response;
+      console.log("response");
+      console.log(response);
+
+      returnValue = response.data;
     })
     .catch((error) => {
+      console.log("error");
       returnValue = null;
     })
     .then(() => {});
-  console.log(returnValue);
-  
+
   return returnValue;
 };
 
