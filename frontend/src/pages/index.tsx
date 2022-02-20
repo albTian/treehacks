@@ -34,21 +34,33 @@ const Index = () => {
   const handleSubmit = async () => {
     setIsLoading(true);
     const newAsset = await getAsset(inputAddr, inputID);
-    if (newAsset && currentAccount) {
+    if (currentAccount && newAsset && newAsset.image_original_url) {
       // MONKE TIME IN HERE
-      const overlayLink = await getOverlay(newAsset.image_original_url, newAsset.name)
+      console.log("newAsset.image_original_url");
+      console.log(newAsset);
+      console.log(newAsset.image_original_url);
+      
+      const overlayLink = await getOverlay(newAsset.image_original_url)
       const fullOverlayLink = `${HTTP}${overlayLink}`
       
       const responseLink = await safeMint(
         currentAccount,
-        `fuck u ${newAsset.name}`,
-        `'${newAsset.description}' - some idiot`,
+        `${newAsset.name} SCREENSHOT`,
+        `'${newAsset.description}' - monke save as`,
         fullOverlayLink
       );
       if (responseLink) {
         setAsset(newAsset);
         setReturnLink(responseLink);
       }
+    } else {
+      toast({
+        title: "Something went wrong...",
+        description: "this NFT may be stored off chain, kinda smart",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      })
     }
     setIsLoading(false);
   };

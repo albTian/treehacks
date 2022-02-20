@@ -27,26 +27,54 @@ const getAsset = async (addr: string, ID: number): Promise<any> => {
   return returnValue;
 };
 
-const getOverlay = async (imgurl: string, imgname: string) => {
+function isValidHttpUrl(input: string) {
+  let url;
+
+  try {
+    url = new URL(input);
+  } catch (_) {
+    return false;
+  }
+
+  return url.protocol === "http:" || url.protocol === "https:";
+}
+
+function makeid(length: number) {
+  var result = "";
+  var characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
+const getOverlay = async (imgurl: string) => {
   let returnValue: any;
-  const data = {
-    imgurl: imgurl,
-    imgname: imgname,
-  };
 
-  await axios
-    .post(HEROKU, data)
-    .then((response) => {
-      console.log("response");
-      console.log(response);
+  if (isValidHttpUrl(imgurl)) {
+    const data = {
+      imgurl: imgurl,
+      imgname: makeid(6),
+    };
+    console.log('data');
+    console.log(data);
+    
+    await axios
+      .post(HEROKU, data)
+      .then((response) => {
+        console.log("response");
+        console.log(response);
 
-      returnValue = response.data;
-    })
-    .catch((error) => {
-      console.log("error");
-      returnValue = null;
-    })
-    .then(() => {});
+        returnValue = response.data;
+      })
+      .catch((error) => {
+        console.log("error");
+        returnValue = null;
+      })
+      .then(() => {});
+  }
 
   return returnValue;
 };
