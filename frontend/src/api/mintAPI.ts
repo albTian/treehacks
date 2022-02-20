@@ -89,4 +89,4 @@ const safeMint = async (
   return response;
 };
 
-export { safeMint, getTokenID };
+export { safeMint };

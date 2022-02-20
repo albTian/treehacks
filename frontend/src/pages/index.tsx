@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react";
 import { checkMetaConnection, connectMeta } from "../api/walletAPI";
 import { Container } from "../components/Container";
 import { getAsset } from "../api/helpers";
-import { getTokenID, safeMint } from "../api/mintAPI";
+import { safeMint } from "../api/mintAPI";
+import Hero from "../components/Hero";
 
 const Index = () => {
   // API
@@ -85,7 +86,7 @@ const Index = () => {
         <title>TREEHACKS</title>
       </Head>
       {/* Only render connect button if not connected */}
-      <Text>Gimme address of nft and its token id to troll</Text>
+      <Hero />
       {currentAccount ? (
         <>
           <Input
@@ -105,11 +106,15 @@ const Index = () => {
             loadingText={"loading ..."}
             onClick={() => handleSubmit()}
           >
-            🦧 monke time
+            🦧 monke time 🦧
           </Button>
           {returnLink && (
-            <Link href={returnLink} isExternal>
-              click here for ur new nft
+            <Link
+              href={returnLink}
+              isExternal
+              w={"100%"}
+            >
+              <Button w={"100%"}>✨ click here for ur new nft ✨</Button>
             </Link>
           )}
         </>
