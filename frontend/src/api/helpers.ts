@@ -40,7 +40,7 @@ function isValidHttpUrl(input: string) {
 }
 
 const isValidOpensea = (input: string) => {
-  if (!isValidHttpUrl) {
+  if (!isValidHttpUrl(input)) {
     return false;
   }
   const url = new URL(input);

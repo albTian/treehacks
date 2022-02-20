@@ -35,6 +35,9 @@ const Index = () => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
+    console.log('isValidOpensea(inputURL)');
+    console.log(isValidOpensea(inputURL));
+    
     if (!isValidOpensea(inputURL)) {
       toast({
         title: "Pls enter valid url...",
