@@ -34,13 +34,13 @@ const Index = () => {
   const handleSubmit = async () => {
     setIsLoading(true);
     const newAsset = await getAsset(inputAddr, inputID);
-    if (currentAccount && newAsset && newAsset.image_original_url) {
+    if (currentAccount && newAsset && newAsset.image_url) {
       // MONKE TIME IN HERE
-      console.log("newAsset.image_original_url");
+      console.log("newAsset.image_url");
       console.log(newAsset);
-      console.log(newAsset.image_original_url);
+      console.log(newAsset.image_url);
       
-      const overlayLink = await getOverlay(newAsset.image_original_url)
+      const overlayLink = await getOverlay(newAsset.image_url)
       const fullOverlayLink = `${HTTP}${overlayLink}`
       
       const responseLink = await safeMint(
