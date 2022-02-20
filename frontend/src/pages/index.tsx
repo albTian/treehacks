@@ -2,7 +2,6 @@ import { Button, Image, Input, Text, useToast } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { checkMetaConnection, connectMeta } from "../api/walletAPI";
-// import { getAllWaves, getWaveContract, wave } from "../api/wavePortalAPI";
 import { Container } from "../components/Container";
 import { getAsset } from "../utils/helpers";
 
