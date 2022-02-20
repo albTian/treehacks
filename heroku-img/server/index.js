@@ -1,14 +1,14 @@
 const PORT = process.env.PORT || 3000;
 const express = require("express");
 const { spawn } = require('child_process');
+require('dotenv').config();
 const app = express();
-
-// Load the AWS SDK for Node.js
 var AWS = require('aws-sdk');
-// Set the region 
 AWS.config.update({ region: 'us-west-1' });
-// Create S3 service object
 s3 = new AWS.S3({ apiVersion: '2006-03-01' });
+
+const { PythonShell } = require('python-shell');
+
 
 // I HAVE DEFATED CORS
 app.use(function (req, res, next) {
@@ -20,54 +20,29 @@ app.use(express.json());
 
 // const players = require('../data.json')
 
+
+// ------------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------------------
+
+
 app.get('/', (req, res) => {
-    console.log(`Here's the console for the server`);
-    console.log(process.env);
-    res.send('Hello World! This is the node.js server')
+    let options = {
+        mode: 'text',
+        pythonOptions: ['-u'], // get print results in real-time
+        scriptPath: 'python/', //If you are having python_test.py script in same folder, then it's optional.
+        args: ['shubhamk314', 'dogwater'] //An argument which can be accessed in the script using sys.argv[1]
+    };
+
+    PythonShell.run('saveas.py', options, function (err, result) {
+        if (err) throw err;
+        // result is an array consisting of messages collected
+        //during execution of script.
+        console.log('result: ', result.toString());
+        res.send(result.toString())
+    });
 })
 
-// app.get('/players/:id', (req, res) => {
-//     const player = players.find(p => p.id === parseInt(req.params.id));
-//     if (player) {
-//         res.send(player)
-//     } else {
-//         res.send("player not found...")
-//     }
-// })
-
-// app.post('/players', (req, res) => {
-//     const newPlayer = {
-//         id: players.length,
-//         name: req.body.name,
-//         weapon: req.body.weapon,
-//         rating: req.body.rating,
-//     }
-
-//     players.push(newPlayer)
-//     res.send(req.newPlayer)
-// })
-
-// app.get('/players', (req, res) => {
-//     res.send(players)
-// })
-
 app.get('/python', (req, res) => {
-    // Python testing here
-    var dataToSend;
-    // spawn new child process to call the python script
-    const python = spawn('python', ['python/saveas.py', 'aids', 'monkey']);
-    // collect data from script
-    python.stdout.on('data', data => {
-        console.log('Pipe data from python script ...');
-        dataToSend = data.toString();
-    });
-    // in close event we are sure that stream from child process is closed
-    python.on('close', (code) => {
-        console.log(`child process close all stdio with code ${code}`);
-        // send data to browser
-        res.send(dataToSend)
-    });
-    // Python ending
 })
 
 app.get('/aws', (req, res) => {
@@ -91,3 +66,35 @@ app.listen(PORT, () => {
     console.log(`listening on http://localhost:${PORT}`);
 })
 
+
+
+
+// const express = require('express');
+// const app = express();
+
+// //Import PythonShell module.
+// const { PythonShell } = require('python-shell');
+
+// //Router to handle the incoming request.
+// app.get("/", (req, res, next) => {
+//     //Here are the option object in which arguments can be passed for the python_test.js.
+//     let options = {
+//         mode: 'text',
+//         pythonOptions: ['-u'], // get print results in real-time
+//         scriptPath: 'python/', //If you are having python_test.py script in same folder, then it's optional.
+//         args: ['shubhamk314', 'dogwater'] //An argument which can be accessed in the script using sys.argv[1]
+//     };
+
+
+//     PythonShell.run('saveas.py', options, function (err, result) {
+//         if (err) throw err;
+//         // result is an array consisting of messages collected
+//         //during execution of script.
+//         console.log('result: ', result.toString());
+//         res.send(result.toString())
+//     });
+// });
+
+// //Creates the server on default port 8000 and can be accessed through localhost:8000
+// const port = 8000;
+// app.listen(port, () => console.log(`Server connected to ${port}`));
