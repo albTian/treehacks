@@ -1,21 +1,31 @@
-// import { web3 } from '@project-serum/anchor';
+import axios from "axios";
 
-// // CLI Properties Given to us
-// const candyMachineProgram = new web3.PublicKey(
-//   'cndyAnrLdpjq1Ssp1z8xxDsB8dxe7u4HL5Nxi2K5WXZ'
-// );
+const BASE = "https://api.opensea.io/api/v1/asset/";
 
-// const TOKEN_METADATA_PROGRAM_ID = new web3.PublicKey(
-//   'metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s'
-// );
+const getLink = (address: string, tokenId: number) => {
+  return `${BASE}${address}/${tokenId}`;
+};
 
-// const SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID = new web3.PublicKey(
-//   'ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL'
-// );
-// export {
-//   candyMachineProgram,
-//   TOKEN_METADATA_PROGRAM_ID,
-//   SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
-// };
+const getAsset = async (addr: string, ID: number): Promise<any> => {
+  const link = getLink(addr, ID);
 
-export {}
+  let returnValue: any;
+  await axios
+    .get(link)
+    .then(function (response) {
+      // handle success
+      console.log(response);
+      returnValue = response.data;
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+      returnValue = null;
+    })
+    .then(function () {
+      // always executed
+    });
+  return returnValue;
+};
+
+export { getAsset };

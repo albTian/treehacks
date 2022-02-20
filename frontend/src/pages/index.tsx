@@ -3,21 +3,19 @@ import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { checkMetaConnection, connectMeta } from "../api/walletAPI";
 import { Container } from "../components/Container";
-import { getAsset } from "../utils/helpers";
+import { getAsset } from "../api/helpers";
 
 const Index = () => {
-  // Metamast specific
+  // API
   const [currentAccount, setCurrentAccount] = useState("");
+  const [asset, setAsset] = useState<any>();
 
-  // Frontend specific
+  // Frontend
   const [inputAddr, setInputAddr] = useState("");
   const [inputID, setInputID] = useState(1);
-
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
-  // Will simply monke with any
-  const [asset, setAsset] = useState<any>();
 
   const handleAddrChange = (event: any) => setInputAddr(event.target.value);
   const handleIDChange = (event: any) => {
@@ -56,7 +54,6 @@ const Index = () => {
       });
     }
   };
-
 
   // Run on load
   useEffect(() => {
