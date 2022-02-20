@@ -26,11 +26,14 @@ app.use(express.json());
 
 
 app.get('/', (req, res) => {
+    const imgurl = "https://static.wikia.nocookie.net/vsbattles/images/7/78/Joseph_goldberg.png/"
+    const imgname = 'goejoldberg'
+
     let options = {
         mode: 'text',
         pythonOptions: ['-u'], // get print results in real-time
         scriptPath: 'python/', //If you are having python_test.py script in same folder, then it's optional.
-        args: ['shubhamk314', 'dogwater'] //An argument which can be accessed in the script using sys.argv[1]
+        args: [imgurl, imgname] //An argument which can be accessed in the script using sys.argv[1]
     };
 
     PythonShell.run('saveas.py', options, function (err, result) {
