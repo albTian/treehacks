@@ -33,9 +33,7 @@ contract SaveAs is
     }
 
     // Either process on frontend or here...
-    // Change parameters to take stuff...?
-    // Change onlyOner for now
-    function safeMint(address to, string memory nftName, string memory nftDesc, string memory nftURL) public onlyOwner {
+    function safeMint(address to, string memory nftName, string memory nftDesc, string memory nftURL) public {
         // If we process here, gas might be higher...
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();

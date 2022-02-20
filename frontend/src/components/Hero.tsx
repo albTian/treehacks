@@ -6,7 +6,7 @@ import theme from "../theme";
 
 const title = "🌴 SaveAs 🌴";
 const description =
-  "give us nft to mint screenshot of it";
+  "give us nft to mint screenshot of it. Make sure ur on RINKEBY TESTNET";
 
 interface HoverEmojiProps {
   emoji: StaticImageData;

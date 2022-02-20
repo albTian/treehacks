@@ -3,7 +3,7 @@ import Web3 from "web3";
 import abi from "../utils/SaveAs.json";
 var web3 = new Web3(Web3.givenProvider || "ws://localhost:3000");
 
-const CONTRACT_ADDRESS = "0x773Ac3770EbC840cf533502CD8B4f8AD6D6069eF";
+const CONTRACT_ADDRESS = "0xC860e3a161300Ef76356Be1523517BAfc8877370";
 const contractABI = abi.abi;
 const BASE = "https://testnets.opensea.io/assets/";
 
