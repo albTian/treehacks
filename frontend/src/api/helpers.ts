@@ -30,8 +30,8 @@ const getAsset = async (addr: string, ID: number): Promise<any> => {
 const getOverlay = async (imgurl: string, imgname: string) => {
   let returnValue: any;
   const data = {
-    imgurl,
-    imgname
+    imgurl: imgurl,
+    imgname: imgname
   }
   await axios
     .post(HEROKU, data)
