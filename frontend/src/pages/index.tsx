@@ -43,6 +43,7 @@ const Index = () => {
   };
 
   const getAsset = () => {
+    // TODO: get the actual tokenId
     const link = getLink(inputMessage, 1);
 
     axios
