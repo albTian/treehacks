@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const BASE = "https://api.opensea.io/api/v1/asset/";
+const HEROKU = "https://saveas-img-processing.herokuapp.com/";
 
 const getLink = (address: string, tokenId: number) => {
   return `${BASE}${address}/${tokenId}`;
@@ -26,4 +27,24 @@ const getAsset = async (addr: string, ID: number): Promise<any> => {
   return returnValue;
 };
 
-export { getAsset };
+const getOverlay = async (imgurl: string, imgname: string) => {
+  let returnValue: any;
+  const data = {
+    imgurl,
+    imgname
+  }
+  await axios
+    .post(HEROKU, data)
+    .then((response) => {
+      returnValue = response.data;
+    })
+    .catch((error) => {
+      returnValue = null;
+    })
+    .then(() => {});
+  console.log(returnValue);
+  
+  return returnValue;
+};
+
+export { getAsset, getOverlay };
