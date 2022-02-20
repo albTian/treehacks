@@ -27,7 +27,7 @@ app.use(express.json());
 
 app.get('/', (req, res) => {
     const imgurl = "https://static.wikia.nocookie.net/vsbattles/images/7/78/Joseph_goldberg.png/"
-    const imgname = 'goejoldberg'
+    const imgname = 'goejoldberg2'
 
     let options = {
         mode: 'text',
