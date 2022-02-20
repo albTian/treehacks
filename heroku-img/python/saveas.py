@@ -10,6 +10,9 @@ from PIL import Image
 ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY_ID')
 SECRET_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 
+BASE = "s3.us-west-1.amazonaws.com"
+
+
 def upload_to_aws(base_img, bucket, s3_file):
     # Save to local file
     in_mem_file = io.BytesIO()
@@ -23,11 +26,14 @@ def upload_to_aws(base_img, bucket, s3_file):
 
         # Upload image to s3
         s3.upload_fileobj(
-            in_mem_file, # This is what i am trying to upload
+            in_mem_file,  # This is what i am trying to upload
             bucket,
             s3_file,
+            ExtraArgs={'ACL': 'public-read', 'ContentType': 'image'}
         )
-        print("Upload Successful")
+        full_result = f'{bucket}.{BASE}/{s3_file}'
+        print(full_result)
+        # print("Upload Successful")
         return True
     except FileNotFoundError:
         print("The file was not found")
@@ -38,6 +44,8 @@ def upload_to_aws(base_img, bucket, s3_file):
 
 # Input: url
 # Output: url
+
+
 def overlay(base_src, bucket, s3_file):
     # replace base_src with link to opensea image src
     base_img = Image.open(urlopen(base_src))
@@ -61,12 +69,14 @@ def overlay(base_src, bucket, s3_file):
     # base_img.show()
     upload_to_aws(base_img, bucket, s3_file)
 
+
 def main():
-    print("starting python script with args: " + sys.argv[1] + ", " + sys.argv[2])
+    # print("starting python script with args: " +
+    #       sys.argv[1] + ", " + sys.argv[2])
     imgurl = sys.argv[1]
     imgname = sys.argv[2]
     overlay(imgurl, "treehacks", imgname)
-    print("finished python script")
+    # print("finished python script")
+
 
 main()
-
