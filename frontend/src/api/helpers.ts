@@ -34,7 +34,7 @@ const getOverlay = async (imgurl: string, imgname: string) => {
     imgname: imgname,
   };
   await axios
-    .post(HEROKU, data)
+    .get(HEROKU)
     .then((response) => {
       console.log("response");
       console.log(response);
@@ -46,6 +46,9 @@ const getOverlay = async (imgurl: string, imgname: string) => {
       returnValue = null;
     })
     .then(() => {});
+
+  
+  await axios.post(HEROKU, )
 
   return returnValue;
 };
