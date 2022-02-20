@@ -51,6 +51,7 @@ function makeid(length: number) {
 }
 
 const getOverlay = async (imgurl: string) => {
+  
   let returnValue: any;
 
   if (isValidHttpUrl(imgurl)) {
@@ -58,7 +59,7 @@ const getOverlay = async (imgurl: string) => {
       imgurl: imgurl,
       imgname: makeid(6),
     };
-    console.log('data');
+    console.log('CALLING POST WITH DATA:');
     console.log(data);
     
     await axios
@@ -74,6 +75,8 @@ const getOverlay = async (imgurl: string) => {
         returnValue = null;
       })
       .then(() => {});
+  } else {
+    console.log("INVALID URL");
   }
 
   return returnValue;

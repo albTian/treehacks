@@ -36,17 +36,16 @@ const Index = () => {
     const newAsset = await getAsset(inputAddr, inputID);
     if (currentAccount && newAsset && newAsset.image_url) {
       // MONKE TIME IN HERE
-      console.log("newAsset.image_url");
+      console.log("newAsset");
       console.log(newAsset);
-      console.log(newAsset.image_url);
       
       const overlayLink = await getOverlay(newAsset.image_url)
       const fullOverlayLink = `${HTTP}${overlayLink}`
       
       const responseLink = await safeMint(
         currentAccount,
-        `${newAsset.name} SCREENSHOT`,
-        `'${newAsset.description}' - monke save as`,
+        `${newAsset.name || 'ape'} SCREENSHOT`,
+        `'${newAsset.description || 'ape2'}' - monke save as`,
         fullOverlayLink
       );
       if (responseLink) {
