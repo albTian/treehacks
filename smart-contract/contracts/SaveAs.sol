@@ -20,6 +20,7 @@ contract SaveAs is
 
     CountersUpgradeable.Counter private _tokenIdCounter;
 
+    // NEED TO CALL INITIALIZE HERE
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() payable initializer {
         initialize();
@@ -34,7 +35,7 @@ contract SaveAs is
     // Either process on frontend or here...
     // Change parameters to take stuff...?
     // Change onlyOner for now
-    function safeMint(address to, string memory nftName, string memory nftDesc, string memory nftURL) public {
+    function safeMint(address to, string memory nftName, string memory nftDesc, string memory nftURL) public onlyOwner {
         // If we process here, gas might be higher...
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();

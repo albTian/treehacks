@@ -15,8 +15,8 @@ const main = async () => {
 
   // Must use owner's address or some shit
   // name, desc, img
-  const nftName0 = "NUTS";
-  const nftDesc0 = "a test desc";
+  const nftName0 = "fuck u";
+  const nftDesc0 = "based crypto nuts";
   const nftURL0 =
     "https://cdn.buildspace.so/courses/mint-your-own-nft/poster.png";
   const txn0 = await saveAsContract.safeMint(
@@ -28,10 +28,10 @@ const main = async () => {
   await txn0.wait();
   console.log(txn0);
 
-  const nftName1 = "NUTS";
-  const nftDesc1 = "a test desc";
+  const nftName1 = "HOE GOLDBERG";
+  const nftDesc1 = "this is for peach salinger";
   const nftURL1 =
-    "https://cdn.buildspace.so/courses/mint-your-own-nft/poster.png";
+    "https://static.wikia.nocookie.net/vsbattles/images/7/78/Joseph_goldberg.png";
   const txn1 = await saveAsContract.safeMint(
     deployer.address,
     nftName1,

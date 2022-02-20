@@ -1,36 +1,52 @@
-import { Button, Input, useToast, Image } from "@chakra-ui/react";
-import axios from "axios";
+import { Button, Image, Input, Text, useToast } from "@chakra-ui/react";
 import Head from "next/head";
-import React, { BaseSyntheticEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { checkMetaConnection, connectMeta } from "../api/walletAPI";
 // import { getAllWaves, getWaveContract, wave } from "../api/wavePortalAPI";
 import { Container } from "../components/Container";
-
-const BASE = "https://api.opensea.io/api/v1/asset/";
-
-const getLink = (address: string, tokenId: number) => {
-  return `${BASE}${address}/${tokenId}`;
-};
+import { getAsset } from "../utils/helpers";
 
 const Index = () => {
   // Metamast specific
   const [currentAccount, setCurrentAccount] = useState("");
 
   // Frontend specific
-  const [inputMessage, setInputMessage] = useState("");
+  const [inputAddr, setInputAddr] = useState("");
+  const [inputID, setInputID] = useState(1);
+
   const toast = useToast();
-  const [isMining, setIsMining] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Will simply monke with any
   const [asset, setAsset] = useState<any>();
 
-  const handleChange = (event: any) => setInputMessage(event.target.value);
+  const handleAddrChange = (event: any) => setInputAddr(event.target.value);
+  const handleIDChange = (event: any) => {
+    const val = event.target.value;
+    if (Number(val)) {
+      setInputID(Number(val));
+    } else if (val == "") {
+      setInputID(val);
+    }
+  };
+
+  const handleSubmit = async () => {
+    setIsLoading(true)
+    const asset = await getAsset(inputAddr, inputID)
+    if (asset) {
+      // MONKE TIME IN HERE
+      setAsset(asset)
+    }
+    console.log('RETURNED ASSET')
+    console.log(asset)
+    setIsLoading(false)
+  }
 
   const onConnectWallet = async () => {
     const account = await connectMeta();
     if (account) {
       setCurrentAccount(account);
-      // Update info 
+      // Update info
     } else {
       toast({
         title: "Make sure you have metamask!",
@@ -42,25 +58,6 @@ const Index = () => {
     }
   };
 
-  const getAsset = () => {
-    // TODO: get the actual tokenId
-    const link = getLink(inputMessage, 1);
-
-    axios
-      .get(link)
-      .then(function (response) {
-        // handle success
-        console.log(response);
-        setAsset(response.data);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
-      .then(function () {
-        // always executed
-      });
-  };
 
   // Run on load
   useEffect(() => {
@@ -82,21 +79,27 @@ const Index = () => {
         <title>TREEHACKS</title>
       </Head>
       {/* Only render connect button if not connected */}
+      <Text>Gimme address of nft and its token id to troll</Text>
       {currentAccount ? (
         <>
           <Input
-            value={inputMessage}
-            onChange={handleChange}
-            placeholder={"link here"}
+            value={inputAddr}
+            onChange={handleAddrChange}
+            placeholder={"address here"}
+          />
+          <Input
+            value={inputID}
+            onChange={handleIDChange}
+            placeholder={"token id"}
           />
           <Button
             width={"100%"}
             // type="submit"
-            isLoading={isMining}
-            loadingText={"mining ..."}
-            onClick={() => getAsset()}
+            isLoading={isLoading}
+            loadingText={"loading ..."}
+            onClick={() => handleSubmit()}
           >
-            👋 gimme an address to monke
+            🦧 monke time
           </Button>
           {asset && (
             <>

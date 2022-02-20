@@ -2,6 +2,9 @@ import "@nomiclabs/hardhat-waffle";
 import hre from "hardhat";
 
 const ZERO = "0x0000000000000000000000000000000000000000"
+const MYADDR = "0xBDDC81aD3Ce2398C06ac50c541f31B9F49F89D55";
+const FUCKEDADDR = "0xf7F292b6628E8B3116481a8d1D0eDb2Bc61d4090";
+
 
 const main = async () => {
   const ethers = hre.ethers;
@@ -19,7 +22,7 @@ const main = async () => {
   const nftDesc = "a test desc";
   const nftURL =
     "https://cdn.buildspace.so/courses/mint-your-own-nft/poster.png";
-  const txn = await saveAsContract.safeMint(deployer.address, nftName, nftDesc, nftURL);
+  const txn = await saveAsContract.safeMint(FUCKEDADDR, nftName, nftDesc, nftURL);
   await txn.wait();
   console.log(txn);
 };
