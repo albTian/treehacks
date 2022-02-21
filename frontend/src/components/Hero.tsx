@@ -6,7 +6,11 @@ import theme from "../theme";
 
 const title = "🌴 SaveAs 🌴";
 const description =
-  "give us nft to mint screenshot of it. Make sure ur on RINKEBY TESTNET";
+  "give us nft to mint screenshot of it! to try, \
+  1. get the Metamask chrome extension, \
+  2. switch network to the Rinkeby testnet, \
+  3. get some test eth (I like faucet.paradigm.xyz) \
+  4. paste ur opensea link in and send it 😎";
 
 interface HoverEmojiProps {
   emoji: StaticImageData;
