@@ -45,4 +45,21 @@ const connectMeta = async (): Promise<any> => {
   return account;
 };
 
-export { checkMetaConnection, connectMeta };
+// Check for rinkeby connection
+const isRinkebyConnection = (): boolean => {
+  // window.ethereum.networkVersion
+  // Rinkeby is == 4
+  let networkVersion = -1;
+  try {
+    const { ethereum } = window;
+    if (!ethereum) {
+      return false;
+    }
+    networkVersion = window.ethereum.networkVersion
+  } catch (error) {
+    console.log(error);
+  }
+  return networkVersion == 4;
+}
+
+export { checkMetaConnection, connectMeta, isRinkebyConnection };

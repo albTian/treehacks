@@ -1,13 +1,16 @@
-import { Button, Image, Input, Text, useToast, Link } from "@chakra-ui/react";
+import { Button, Input, Link, useToast } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-import { checkMetaConnection, connectMeta } from "../api/walletAPI";
-import { Container } from "../components/Container";
-import { getAsset, getOverlay, isValidOpensea } from "../api/helpers";
+import { isValidOpensea } from "../api/helpers";
 import { safeMint } from "../api/mintAPI";
+import { getAsset, getOverlay } from "../api/restAPI";
+import {
+  checkMetaConnection,
+  connectMeta,
+  isRinkebyConnection
+} from "../api/walletAPI";
+import { Container } from "../components/Container";
 import Hero from "../components/Hero";
-
-const HTTP = "https://";
 
 const Index = () => {
   // API
@@ -17,27 +20,22 @@ const Index = () => {
 
   // Frontend
   const [inputURL, setInputURL] = useState("");
-  // const [inputAddr, setInputAddr] = useState("");
-  // const [inputID, setInputID] = useState(1);
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
-  // const handleAddrChange = (event: any) => setInputAddr(event.target.value);
-  // const handleIDChange = (event: any) => {
-  //   const val = event.target.value;
-  //   if (Number(val)) {
-  //     setInputID(Number(val));
-  //   } else if (val == "") {
-  //     setInputID(val);
-  //   }
-  // };
   const handleURLChange = (event: any) => setInputURL(event.target.value);
 
+  // Where the magic happens
+  // Pattern:
+  //    API call or check
+  //    Guard clause (with toast)
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    console.log('isValidOpensea(inputURL)');
-    console.log(isValidOpensea(inputURL));
+
+
     
+    // Must be valid url AND opensea url
+    // Can add more support for sites here
     if (!isValidOpensea(inputURL)) {
       toast({
         title: "Pls enter valid url...",
@@ -48,15 +46,24 @@ const Index = () => {
       });
       return;
     }
+
+    if (!isRinkebyConnection()) {
+      toast({
+        title: "Make sure you're on the rinkeby testnet",
+        description: "Go to your Metamask chrome extension and select Rinkeby Test Network",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    // Parse url
     const realURL = new URL(inputURL);
     const paths = realURL.pathname.split("/");
-    console.log(paths);
 
     const inputID = Number(paths[paths.length - 1]);
     const inputAddr = paths[paths.length - 2];
-    console.log(inputAddr);
-    console.log(inputID);
-    
 
     if (!inputAddr || !inputID) {
       toast({
@@ -72,32 +79,47 @@ const Index = () => {
 
     setIsLoading(true);
     const newAsset = await getAsset(inputAddr, inputID);
-    if (currentAccount && newAsset && newAsset.image_url) {
-      // MONKE TIME IN HERE
-      console.log("newAsset");
-      console.log(newAsset);
-
-      const overlayLink = await getOverlay(newAsset.image_url);
-      const fullOverlayLink = `${HTTP}${overlayLink}`;
-
-      const responseLink = await safeMint(
-        currentAccount,
-        `${newAsset.name || newAsset.name || "noname"} SCREENSHOT`,
-        `'${newAsset.description || "no desc too bad"}' - clicked save as lol`,
-        fullOverlayLink
-      );
-      if (responseLink) {
-        setAsset(newAsset);
-        setReturnLink(responseLink);
-      }
-    } else {
+    if (!(currentAccount && newAsset && newAsset.image_url)) {
       toast({
         title: "Something went wrong...",
+        description:
+          "Make sure you're on the specific NFT's page, not the collection",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    console.log(newAsset, "newAsset");
+
+    // Call to our API
+    const overlayLink = await getOverlay(newAsset.image_url);
+    if (!overlayLink) {
+      toast({
+        title: "Couldn't saveas...",
         description: "this NFT may be stored off chain, kinda smart",
         status: "error",
         duration: 3000,
         isClosable: true,
       });
+      setIsLoading(false);
+      return;
+    }
+
+    // Call to our Smart Contract
+    const responseLink = await safeMint(
+      currentAccount,
+      `${
+        newAsset.name || newAsset.name || newAsset.token_id || "noname"
+      } SCREENSHOT`,
+      `'${newAsset.description || "no desc too bad"}' - clicked save as lol`,
+      overlayLink
+    );
+    if (responseLink) {
+      setAsset(newAsset);
+      setReturnLink(responseLink);
     }
     setIsLoading(false);
   };
@@ -110,7 +132,8 @@ const Index = () => {
     } else {
       toast({
         title: "Make sure you have metamask!",
-        description: "Get the chrome extension to connect your wallet",
+        description:
+          "Get the chrome extension to connect your wallet. If you have it, try manually logging in with the extension",
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -141,16 +164,6 @@ const Index = () => {
       <Hero />
       {currentAccount ? (
         <>
-          {/* <Input
-            value={inputAddr}
-            onChange={handleAddrChange}
-            placeholder={"address here"}
-          />
-          <Input
-            value={inputID}
-            onChange={handleIDChange}
-            placeholder={"token id"}
-          /> */}
           <Input
             value={inputURL}
             onChange={handleURLChange}
@@ -166,15 +179,11 @@ const Index = () => {
           >
             🦧 monke time 🦧
           </Button>
-          {/* <Button
-            width={"100%"}
-            onClick={() => getOverlay("https://treehacks.s3.us-west-1.amazonaws.com/goejoldberg69", "recursion")}
-          >
-            🦧 monke test 🦧
-          </Button> */}
-          {(!isLoading && returnLink) && (
+          {!isLoading && returnLink && (
             <Link href={returnLink} isExternal w={"100%"}>
-              <Button w={"100%"}>✨ click here for ur new nft: {asset.name || ""} ✨</Button>
+              <Button w={"100%"}>
+                ✨ click here for ur new nft: {asset.name || ""} ✨
+              </Button>
             </Link>
           )}
         </>

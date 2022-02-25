@@ -1,8 +1,10 @@
 import { ethers } from "ethers";
 import Web3 from "web3";
 import abi from "../utils/SaveAs.json";
+// idk why I need this retarded shit
 var web3 = new Web3(Web3.givenProvider || "ws://localhost:3000");
 
+// Address and abi of SaveAs (CHANGE IF REDEPLOYED)
 const CONTRACT_ADDRESS = "0xC860e3a161300Ef76356Be1523517BAfc8877370";
 const contractABI = abi.abi;
 const BASE = "https://testnets.opensea.io/assets/";
@@ -31,14 +33,16 @@ const getSaveAsContract = () => {
 
 // Get the token id based off transaction id
 const getTokenID = async (txnId: string): Promise<number> => {
-  let id = 1
-  await web3.eth.getTransactionReceipt(txnId).then(function(data: { logs: any; }){
-    let transaction = data;
-    let logs = data.logs;
-    id = web3.utils.hexToNumber(logs[0].topics[3])
-  });
-  return id
-}
+  let id = 1;
+  await web3.eth
+    .getTransactionReceipt(txnId)
+    .then(function (data: { logs: any }) {
+      let transaction = data;
+      let logs = data.logs;
+      id = web3.utils.hexToNumber(logs[0].topics[3]);
+    });
+  return id;
+};
 
 // Actually mint the NFT
 // Need address + data( name, desc, image )
@@ -67,21 +71,11 @@ const safeMint = async (
 
     // Params: addr, name, desc, img
     let nftTxn = await saveAsContract.safeMint(addr, name, desc, img);
-    // console.log(`nftTxn:`);
-    // console.log(nftTxn);
-
-    // console.log("Mining...please wait.");
-    const dog = await nftTxn.wait();
-    // console.log(`dog:`);
-    // console.log(dog);
-
-    // console.log(
-    //   `Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`
-    // );
-    const id = await getTokenID(nftTxn.hash)
+    await nftTxn.wait();
+    const id = await getTokenID(nftTxn.hash);
+    
     response = `${returnLink}/${id}`;
     console.log(response);
-    
   } catch (error: any) {
     console.log(error);
     response = "";
