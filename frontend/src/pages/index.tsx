@@ -32,8 +32,6 @@ const Index = () => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
-
-    
     // Must be valid url AND opensea url
     // Can add more support for sites here
     if (!isValidOpensea(inputURL)) {
@@ -92,8 +90,10 @@ const Index = () => {
       return;
     }
 
-    console.log(newAsset, "newAsset");
-
+    // Stop the chain here and modify newAsset lmao
+    console.log("Grabbed from opensea:");
+    console.log(newAsset);
+    
     // Call to our API
     const overlayLink = await getOverlay(newAsset.image_url);
     if (!overlayLink) {
@@ -107,6 +107,10 @@ const Index = () => {
       setIsLoading(false);
       return;
     }
+
+    console.log("Response from our rest API:");
+    console.log(overlayLink);
+    
 
     // Call to our Smart Contract
     const responseLink = await safeMint(

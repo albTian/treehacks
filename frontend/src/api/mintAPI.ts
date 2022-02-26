@@ -67,7 +67,9 @@ const safeMint = async (
   let response = "";
   // Now we are guranteed to have ethereum and saveAsContract
   try {
-    console.log("Going to pop wallet now to pay gas...");
+    console.log(`Calling safeMint with\naddr: ${addr},\nname: ${name},\ndesc: ${desc},\nimg: ${img}`);
+    
+    // console.log("Going to pop wallet now to pay gas...");
 
     // Params: addr, name, desc, img
     let nftTxn = await saveAsContract.safeMint(addr, name, desc, img);
