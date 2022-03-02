@@ -79,6 +79,7 @@ const safeMint = async (
     response = `${returnLink}/${id}`;
     console.log(response);
   } catch (error: any) {
+    console.log('error');
     console.log(error);
     response = "";
   }

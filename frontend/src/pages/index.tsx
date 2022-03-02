@@ -111,20 +111,20 @@ const Index = () => {
     console.log("Response from our rest API:");
     console.log(overlayLink);
     
-
     // Call to our Smart Contract
+    // TOO BAD NO MORE DESCRIPTIONS LOL
+    const nameOrId = newAsset.name || newAsset.tokenId || "noname"
     const responseLink = await safeMint(
       currentAccount,
-      `${
-        newAsset.name || newAsset.name || newAsset.token_id || "noname"
-      } SCREENSHOT`,
-      `'${newAsset.description || "no desc too bad"}' - clicked save as lol`,
+      `${nameOrId} SCREENSHOT`,
+      `screenshot of ${nameOrId}`,
       overlayLink
     );
+    
     if (responseLink) {
       setAsset(newAsset);
-      setReturnLink(responseLink);
     }
+    setReturnLink(responseLink);
     setIsLoading(false);
   };
 
