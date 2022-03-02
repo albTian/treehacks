@@ -1,4 +1,4 @@
-import { Button, Input, Link, useToast } from "@chakra-ui/react";
+import { Button, Input, Link, useToast, Image } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { isValidOpensea } from "../api/helpers";
@@ -7,7 +7,7 @@ import { getAsset, getOverlay } from "../api/restAPI";
 import {
   checkMetaConnection,
   connectMeta,
-  isRinkebyConnection
+  isRinkebyConnection,
 } from "../api/walletAPI";
 import { Container } from "../components/Container";
 import Hero from "../components/Hero";
@@ -15,8 +15,9 @@ import Hero from "../components/Hero";
 const Index = () => {
   // API
   const [currentAccount, setCurrentAccount] = useState("");
-  const [asset, setAsset] = useState<any>();
+  const [currentAsset, setCurrentAsset] = useState<any>();
   const [returnLink, setReturnLink] = useState("");
+  const [screenshotLink, setScreenshotLink] = useState("");
 
   // Frontend
   const [inputURL, setInputURL] = useState("");
@@ -24,6 +25,10 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleURLChange = (event: any) => setInputURL(event.target.value);
+  const handleAssetNameChange = (event: any) =>
+    setCurrentAsset({ ...currentAsset, name: event.target.value });
+  const handleAssetDescChange = (event: any) =>
+    setCurrentAsset({ ...currentAsset, description: event.target.value });
 
   // Where the magic happens
   // Pattern:
@@ -48,7 +53,8 @@ const Index = () => {
     if (!isRinkebyConnection()) {
       toast({
         title: "Make sure you're on the rinkeby testnet",
-        description: "Go to your Metamask chrome extension and select Rinkeby Test Network",
+        description:
+          "Go to your Metamask chrome extension and select Rinkeby Test Network",
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -90,10 +96,6 @@ const Index = () => {
       return;
     }
 
-    // Stop the chain here and modify newAsset lmao
-    console.log("Grabbed from opensea:");
-    console.log(newAsset);
-    
     // Call to our API
     const overlayLink = await getOverlay(newAsset.image_url);
     if (!overlayLink) {
@@ -107,25 +109,36 @@ const Index = () => {
       setIsLoading(false);
       return;
     }
+    // Stop the chain here and modify newAsset lmao
+    console.log("Grabbed from opensea:");
+    console.log(newAsset);
+    // Hard reset the description to prevent special chars lol
+    setCurrentAsset({ ...newAsset, description: "nft description" });
+    setScreenshotLink(overlayLink);
+    setIsLoading(false);
+  };
 
+  const handleMint = async (event: any) => {
+    event.preventDefault();
+    setIsLoading(true);
+    console.log(currentAsset);
     console.log("Response from our rest API:");
-    console.log(overlayLink);
-    
+    console.log(screenshotLink);
+
     // Call to our Smart Contract
     // TOO BAD NO MORE DESCRIPTIONS LOL
-    const nameOrId = newAsset.name || newAsset.tokenId || "noname"
+    const nameOrId = currentAsset.name || currentAsset.tokenId || "noname";
     const responseLink = await safeMint(
       currentAccount,
-      `${nameOrId} SCREENSHOT`,
-      `screenshot of ${nameOrId}`,
-      overlayLink
+      nameOrId,
+      currentAsset.description,
+      screenshotLink
     );
-    
-    if (responseLink) {
-      setAsset(newAsset);
-    }
-    setReturnLink(responseLink);
+
+    // Reset
+    setCurrentAsset(null);
     setIsLoading(false);
+    setReturnLink(responseLink);
   };
 
   const onConnectWallet = async () => {
@@ -165,32 +178,66 @@ const Index = () => {
         <title>TREEHACKS</title>
       </Head>
       {/* Only render connect button if not connected */}
-      <Hero />
+      <Hero
+        desc={
+          currentAccount && currentAsset
+            ? "Would you like to add a custom name or description?"
+            : ""
+        }
+      />
       {currentAccount ? (
-        <>
-          <Input
-            value={inputURL}
-            onChange={handleURLChange}
-            placeholder={"opensea url"}
-          />
-
-          <Button
-            width={"100%"}
-            type="submit"
-            isLoading={isLoading}
-            loadingText={"loading ..."}
-            onClick={(e) => handleSubmit(e)}
-          >
-            🦧 monke time 🦧
-          </Button>
-          {!isLoading && returnLink && (
-            <Link href={returnLink} isExternal w={"100%"}>
-              <Button w={"100%"}>
-                ✨ click here for ur new nft: {asset.name || ""} ✨
-              </Button>
-            </Link>
-          )}
-        </>
+        !currentAsset ? (
+          // Get the asset from OpenSea
+          // Get screenshotted version
+          // Set currentAsset to the OpenSea
+          <>
+            <Input
+              value={inputURL}
+              onChange={handleURLChange}
+              placeholder={"opensea url"}
+            />
+            <Button
+              width={"100%"}
+              type="submit"
+              isLoading={isLoading}
+              loadingText={"loading ..."}
+              onClick={(e) => handleSubmit(e)}
+            >
+              🦧 monke time 🦧
+            </Button>
+            {!isLoading && returnLink && (
+              <Link href={returnLink} isExternal w={"100%"}>
+                <Button w={"100%"}>
+                  ✨ click here for ur new nft! ✨
+                </Button>
+              </Link>
+            )}
+          </>
+        ) : (
+          // Actually mint the changed stuff
+          <>
+            <Input
+              value={currentAsset.name || ""}
+              onChange={handleAssetNameChange}
+              placeholder={"NFT name"}
+            />
+            <Input
+              value={currentAsset.description || ""}
+              onChange={handleAssetDescChange}
+              placeholder={"NFT description"}
+            />
+            <Button
+              width={"100%"}
+              type="submit"
+              isLoading={isLoading}
+              loadingText={"loading ..."}
+              onClick={(e) => handleMint(e)}
+            >
+              🦧 monke time 2 🦧
+            </Button>
+            <Image src={screenshotLink} alt={"NFT screenshot image"} />
+          </>
+        )
       ) : (
         <Button onClick={() => onConnectWallet()}>CONNECT 2 METAMASK</Button>
       )}

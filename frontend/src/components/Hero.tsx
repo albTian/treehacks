@@ -4,7 +4,11 @@ import theme from "../theme";
 
 const title = "🌴 SaveAs 🌴";
 
-const Hero = () => (
+interface HeroProps {
+  desc: string,
+}
+
+const Hero = (props: HeroProps) => (
   <VStack
     justifyContent="center"
     alignItems="center"
@@ -12,19 +16,24 @@ const Hero = () => (
     bgClip="text"
   >
     <Heading fontSize={[30, 45, 60]}>{title}</Heading>
-    <Text>
+    {/* To get around some weird <br /> tag nonesense ... */}
+    {props.desc ? (
+      <Text>{props.desc}</Text>
+    ) : (
+      <Text>
         Give us an nft to mint a screenshot of it! To try,
-        <br/>
-        <br/>
+        <br />
+        <br />
         1. Get the Metamask chrome extension
-        <br/>
+        <br />
         2. Switch network to the Rinkeby testnet
-        <br/>
+        <br />
         3. Get some test eth (I like faucet.paradigm.xyz)
-        <br/>
+        <br />
         4. Paste ur opensea link in and send it
-        <br/>
-    </Text>
+        <br />
+      </Text>
+    )}
   </VStack>
 );
 
