@@ -1,24 +1,8 @@
-import {
-    Heading, Text, VStack
-} from "@chakra-ui/react";
+import { Heading, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 import theme from "../theme";
 
 const title = "🌴 SaveAs 🌴";
-const description =
-  "give us nft to mint screenshot of it! to try,\n \
-  1. get the Metamask chrome extension,\n \
-  2. switch network to the Rinkeby testnet,\n \
-  3. get some test eth (I like faucet.paradigm.xyz)\n \
-  4. paste ur opensea link in and send it 😎";
-
-interface HoverEmojiProps {
-  emoji: StaticImageData;
-  title: string;
-  description: string;
-  href: string;
-  external: boolean;
-}
 
 const Hero = () => (
   <VStack
@@ -28,7 +12,19 @@ const Hero = () => (
     bgClip="text"
   >
     <Heading fontSize={[30, 45, 60]}>{title}</Heading>
-    <Text>{description}</Text>
+    <Text>
+        Give us an nft to mint a screenshot of it! To try,
+        <br/>
+        <br/>
+        1. Get the Metamask chrome extension
+        <br/>
+        2. Switch network to the Rinkeby testnet
+        <br/>
+        3. Get some test eth (I like faucet.paradigm.xyz)
+        <br/>
+        4. Paste ur opensea link in and send it
+        <br/>
+    </Text>
   </VStack>
 );
 

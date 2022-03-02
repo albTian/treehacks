@@ -48,7 +48,7 @@ const getOverlay = async (imgurl: string) => {
   await axios
     .post(HEROKU_ENDPOINT, data)
     .then((response) => {
-      returnValue = `https://${response.data}`;
+      returnValue = response.data;
     })
     .catch((error) => {
       returnValue = null;

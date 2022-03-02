@@ -31,7 +31,8 @@ def upload_to_aws(base_img, bucket, s3_file):
             s3_file,
             ExtraArgs={'ACL': 'public-read', 'ContentType': 'image'}
         )
-        full_result = f'{bucket}.{BASE}/{s3_file}'
+        # Needs https as well...
+        full_result = f'https://{bucket}.{BASE}/{s3_file}'
         print(full_result)
         # print("Upload Successful")
         return True
@@ -51,7 +52,7 @@ def overlay(base_src, bucket, s3_file):
         # replace base_src with link to opensea image src
         base_img = Image.open(urlopen(base_src))
 
-        overlay_src = "https://saveas-base-resources.s3.us-west-1.amazonaws.com/saveasoverlay.png"
+        overlay_src = "https://treehacks.s3.us-west-1.amazonaws.com/saveasoverlay.png"
         overlay_img = Image.open(urlopen(overlay_src))  # original dim: 482w 166h
 
         w1, h1 = base_img.size
