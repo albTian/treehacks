@@ -66,7 +66,7 @@ const Index = () => {
     const realURL = new URL(inputURL);
     const paths = realURL.pathname.split("/");
 
-    const inputID = Number(paths[paths.length - 1]);
+    const inputID = paths[paths.length - 1];
     const inputAddr = paths[paths.length - 2];
 
     if (!inputAddr || !inputID) {

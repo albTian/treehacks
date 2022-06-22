@@ -5,7 +5,7 @@ const OPENSEA_API = "https://api.opensea.io/api/v1/asset/";
 const HEROKU_ENDPOINT = "https://saveas-img-processing.herokuapp.com/";
 
 // Gets the opensea asset
-const getAsset = async (addr: string, ID: number): Promise<any> => {
+const getAsset = async (addr: string, ID: string): Promise<any> => {
   const link = `${OPENSEA_API}${addr}/${ID}`;
   if (!isValidHttpUrl(link)) {
     console.log("imgurl was not a valid url...");
