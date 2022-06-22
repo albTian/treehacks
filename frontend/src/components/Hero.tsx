@@ -32,7 +32,7 @@ const Hero = (props: HeroProps) => (
         <br />
         4. Paste ur opensea link in and send it
         <br />
-        5. Check it out <a target={"_blank"} href="https://testnets.opensea.io/collection/saveas-v3">{'\u2192 HERE'}</a>
+        5. Check it out <a target={"_blank"} rel="noreferrer" href="https://testnets.opensea.io/collection/saveas-v3">{'\u2192 HERE'}</a>
         <br />
       </Text>
     )}
